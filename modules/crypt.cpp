@@ -97,7 +97,7 @@ public:
 				sMessage.Decrypt(it->second);
 				sMessage.LeftChomp(8);
 				sMessage = sMessage.c_str();
-				Nick.SetNick(NickPrefix() + Nick.GetNick());
+				//Nick.SetNick(NickPrefix() + Nick.GetNick());
 			}
 		}
 
