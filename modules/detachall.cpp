@@ -11,6 +11,8 @@
 #include <znc/Chan.h>
 #include <znc/IRCNetwork.h>
 
+using std::vector;
+
 class CDetachAllMod : public CModule {
 public:
     MODCONSTRUCTOR(CDetachAllMod) {}
@@ -40,19 +42,17 @@ protected:
     void DetachAll()
     {
         
-        CIRCNetwork* pNetwork = GetNetwork();
+        const vector<CChan *>& vChans = m_pNetwork->GetChans();
 
-        const vector<CChan *>& Channels = pNetwork->GetChans();
-
-        for (unsigned int c = 0; c < Channels.size(); c++)
+        for (unsigned int c = 0; c < vChans.size(); c++)
         {
-            CChan* chan = Channels[c];
+            CChan* chan = vChans[c];
             if (chan->IsDetached()) {
-                m_pUser->PutStatusNotice(Channels[c]->GetName() + " already detached", m_pClient);
+                m_pUser->PutStatusNotice(vChans[c]->GetName() + " already detached", m_pClient);
             }
             else {
                 chan->DetachUser();
-                m_pUser->PutStatusNotice(Channels[c]->GetName() + " DETACHED", m_pClient);
+                m_pUser->PutStatusNotice(vChans[c]->GetName() + " DETACHED", m_pClient);
             }
         }
     }
